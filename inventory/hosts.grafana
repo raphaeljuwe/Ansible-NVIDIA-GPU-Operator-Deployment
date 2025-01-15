@@ -1,0 +1,17 @@
+[BANKv3:children]
+masters
+nodes
+
+[BANKv3:vars]
+# Grafana Configuration
+grafana_namespace=""
+grafana_user=""
+grafana_password=""
+grafana_datasource_name=""
+grafana_prometheus_namespace="openshift-metrics"
+grafana_prometheus_sa=prometheus
+grafana_node_exporter=false
+grafana_graph_granularity="2m"
+
+[masters]
+master

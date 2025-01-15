@@ -1,0 +1,40 @@
+---
+- name: Deploy RHEL Entitlements
+  hosts: localhost
+  connection: local
+  vars:
+    rhel_entitlement_secret: "{{ lookup('file', '/entitlement/file') | b64encode }}"
+  tasks:
+    - name: Create RHEL Entitlements Secret
+      kubernetes:
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: rhel-entitlement
+            namespace: nvidia-gpu-operator
+          type: Opaque
+          data:
+            entitlement: "{{ rhel_entitlement_secret }}"
+
+    - name: Mount RHEL Entitlements in GPU Operator DaemonSet
+      kubernetes:
+        definition:
+          apiVersion: apps/v1
+          kind: DaemonSet
+          metadata:
+            name: nvidia-driver-daemonset
+            namespace: nvidia-gpu-operator
+          spec:
+            template:
+              spec:
+                containers:
+                - name: nvidia-driver-ctr
+                  volumeMounts:
+                  - name: rhel-entitlement
+                    mountPath: /etc/pki/entitlement
+                    readOnly: true
+                volumes:
+                - name: rhel-entitlement
+                  secret:
+                    secretName: rhel-entitlement

@@ -1,0 +1,17 @@
+---
+- name: Configure RHEL Entitlements
+  copy:
+    src: entitlement.pem
+    dest: /etc/pki/entitlement/
+    owner: root
+    group: root
+    mode: '0644' 
+
+
+- name: Register system with subscription-manager
+  command: >
+    subscription-manager register
+    --username={{ subscription_username }}
+    --password={{ subscription_password }}
+    --auto-attach
+  when: subscription_username is defined and subscription_password is defined

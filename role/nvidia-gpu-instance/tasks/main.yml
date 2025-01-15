@@ -1,0 +1,7 @@
+
+---
+- name: Deploy NVIDIA GPU Instance
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'nvidia-gpu-instance.yml.j2') }}"
+  register: nvidia_gpu_instance

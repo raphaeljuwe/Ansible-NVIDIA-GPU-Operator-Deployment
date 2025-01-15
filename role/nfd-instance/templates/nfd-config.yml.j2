@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-feature-discovery
+  namespace: {{ nfd_namespace }}
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: nfd
+          image: {{ nfd_image }}

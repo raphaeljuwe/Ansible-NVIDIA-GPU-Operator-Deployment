@@ -1,0 +1,19 @@
+---
+- name: Deploy NVIDIA GPU Instance
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create NVIDIA GPU ClusterPolicy
+      kubernetes:
+        definition:
+          apiVersion: nvidia.com/v1
+          kind: ClusterPolicy
+          metadata:
+            name: gpu-cluster-policy
+          spec:
+            operator:
+              defaultRuntime: crio
+            driver:
+              enabled: true
+            toolkit:
+              enabled: true

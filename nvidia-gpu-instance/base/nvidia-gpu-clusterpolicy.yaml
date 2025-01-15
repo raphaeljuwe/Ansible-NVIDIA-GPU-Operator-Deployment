@@ -1,0 +1,6 @@
+apiVersion: nvidia.com/v1
+kind: ClusterPolicy
+metadata:
+  name: nvidia-gpu
+spec:
+  size: 1

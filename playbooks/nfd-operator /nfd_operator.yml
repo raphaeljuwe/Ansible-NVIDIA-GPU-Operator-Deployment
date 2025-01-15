@@ -1,0 +1,26 @@
+---
+- name: Deploy NFD Operator
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create NFD Operator Subscription
+      kubernetes:
+        definition:
+          apiVersion: operators.coreos.com/v1alpha1
+          kind: Subscription
+          metadata:
+            name: nfd
+            namespace: openshift-operators
+          spec:
+            channel: stable
+            name: nfd
+            source: redhat-operators
+            sourceNamespace: openshift-marketplace
+    
+    - name: Wait for NFD Operator to be ready
+      kubernetes:
+        kind: ClusterServiceVersion
+        name: nfd.v4.9.0
+        namespace: openshift-operators
+        wait: yes
+        wait_timeout: 300

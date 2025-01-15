@@ -1,0 +1,22 @@
+- name: Deploy Node Feature Discovery Instance
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'nfd-config.yml.j2') }}"
+  register: nfd_instance
+
+- name: Create NFD namespace
+  oc_namespace:
+    name: "{{ nfd_namespace }}"
+    state: present
+
+- name: Install NFD operator from operatorhub
+  openshift_operator:
+    name: nvidia-node-feature-discovery
+    namespace: "{{ openshift_namespace }}"
+    channel: "{{ nfd_channel }}"
+
+- name: Wait for NFD operator to be ready
+  oc_wait:
+    name: nvidia-node-feature-discovery
+    namespace: "{{ openshift_namespace }}"
+    state: present

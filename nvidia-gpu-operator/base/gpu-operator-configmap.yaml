@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gpu-operator-config
+  namespace: gpu-operator-resources
+data:
+  NAMESPACE: gpu-operator-resources

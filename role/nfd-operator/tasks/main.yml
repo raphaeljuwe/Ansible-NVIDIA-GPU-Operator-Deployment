@@ -1,0 +1,6 @@
+---
+- name: Deploy Node Feature Discovery Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'nfd-operator-config.yml.j2') }}"
+  register: nfd_operator

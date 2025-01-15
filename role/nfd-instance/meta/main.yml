@@ -1,0 +1,8 @@
+---
+galaxy_info:
+  role_name: nfd_instance  
+  author: raphael
+  description: "sets up and configures an NFD instance"  
+  license: "MIT"  
+  min_ansible_version: "2.9"  
+dependencies: []

@@ -1,0 +1,7 @@
+
+---
+- name: Deploy NVIDIA GPU Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'nvidia-gpu-operator.yml.j2') }}"
+  register: nvidia_gpu_operator
